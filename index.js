@@ -1,103 +1,147 @@
 const questions = [
     {
-        title: "What is the largest moon in our solar system?",
-        A: "Ganymede",
-        B: "Titan",
-        C: "Europa",
-        D: "Triton",
-        Answer: "A" //Ganymede
+      "title": "What is the capital of France?",
+      "A": "Paris",
+      "B": "Rome",
+      "C": "Berlin",
+      "D": "London",
+      "Answer": "Paris"
     },
     {
-        title: "Which planet has the Great Red Spot?",
-        A: "Venus",
-        B: "Mars",
-        C: "Jupiter",
-        D: "Saturn",
-        Answer: "C" //Jupiter
+      "title": "Who wrote 'Romeo and Juliet'?",
+      "A": "William Shakespeare",
+      "B": "Charles Dickens",
+      "C": "Jane Austen",
+      "D": "F. Scott Fitzgerald",
+      "Answer": "William Shakespeare"
     },
     {
-        title: "What is the hottest planet in our solar system?",
-        A: "Venus",
-        B: "Earth",
-        C: "Mercury",
-        D: "Mars",
-        Answer: "A" // Venus
+      "title": "What is the chemical symbol for water?",
+      "A": "H2O",
+      "B": "CO2",
+      "C": "NaCl",
+      "D": "O2",
+      "Answer": "H2O"
     },
     {
-        title: "Which planet has the most rings?",
-        A: "Jupiter",
-        B: "Saturn",
-        C: "Uranus",
-        D: "Neptune",
-        Answer: "B" //Saturn
+      "title": "Which planet is known as the 'Red Planet'?",
+      "A": "Mars",
+      "B": "Jupiter",
+      "C": "Saturn",
+      "D": "Uranus",
+      "Answer": "Mars"
     },
     {
-        title: "What is the farthest planet from the Sun in our solar system?",
-        A: "Neptune",
-        B: "Uranus",
-        C: "Pluto",
-        D: "Mercury",
-        Answer: "A" //Neptune
+      "title": "Who painted the Mona Lisa?",
+      "A": "Leonardo da Vinci",
+      "B": "Pablo Picasso",
+      "C": "Vincent van Gogh",
+      "D": "Michelangelo",
+      "Answer": "Leonardo da Vinci"
     },
     {
-        title: "What is the second smallest planet in our solar system?",
-        A: "Venus",
-        B: "Mars",
-        C: "Mercury",
-        D: "Earth",
-        Answer: "B" //Mars
+      "title": "What is the largest ocean on Earth?",
+      "A": "Pacific",
+      "B": "Atlantic",
+      "C": "Indian",
+      "D": "Arctic",
+      "Answer": "Pacific"
     },
     {
-        title: "Which planet has the most elliptical orbit?",
-        A: "Venus",
-        B: "Mars",
-        C: "Mercury",
-        D: "Pluto",
-        Answer: "C" //Mercury
+      "title": "Who is credited with discovering the theory of relativity?",
+      "A": "Albert Einstein",
+      "B": "Isaac Newton",
+      "C": "Galileo Galilei",
+      "D": "Stephen Hawking",
+      "Answer": "Albert Einstein"
     },
     {
-        title: "What is the densest planet in our solar system?",
-        A: "Earth",
-        B: "Mercury",
-        C: "Mars",
-        D: "Venus",
-        Answer: "A" //Earth
+      "title": "What is the hardest natural substance on Earth?",
+      "A": "Diamond",
+      "B": "Graphite",
+      "C": "Topaz",
+      "D": "Quartz",
+      "Answer": "Diamond"
     },
     {
-        title: "Which planet has the largest volcano in the solar system?",
-        A: "Mars",
-        B: "Earth",
-        C: "Venus",
-        D: "Mercury",
-        Answer: "A" //Mars
-    }    
+      "title": "Which country is the largest by land area?",
+      "A": "Russia",
+      "B": "Canada",
+      "C": "China",
+      "D": "United States",
+      "Answer": "Russia"
+    },
+    {
+      "title": "Who wrote 'To Kill a Mockingbird'?",
+      "A": "Harper Lee",
+      "B": "J.D. Salinger",
+      "C": "Mark Twain",
+      "D": "George Orwell",
+      "Answer": "Harper Lee"
+    }
 ];
+    
 
 const title = document.querySelector("h1");
-const firstButton = document.querySelector(".first");
-const secondButton = document.querySelector(".second");
-const thirdButton = document.querySelector(".third");
-const fourthButton = document.querySelector(".fourth");
+const firstOption = document.querySelector(".first");
+const secondOption = document.querySelector(".second");
+const thirdOption = document.querySelector(".third");
+const fourthOption = document.querySelector(".fourth");
 const continueButton = document.querySelector(".continue");
 const submitButton = document.querySelector(".submit");
 
 function loadQuestion(info) {
     title.textContent = info.title;
-    firstButton.textContent = info.A;
-    secondButton.textContent = info.B;
-    thirdButton.textContent = info.C;
-    fourthButton.textContent = info.D;
+    firstOption.textContent = info.A;
+    secondOption.textContent = info.B;
+    thirdOption.textContent = info.C;
+    fourthOption.textContent = info.D;
 }
 
 loadQuestion(questions[0]);
+
 let questionIndex = 1;
 
+let score = 0;
+
+let allOptions = document.querySelectorAll(".option");
+
+allOptions.forEach((i) => {
+    i.addEventListener("click", (event) => {
+        i.style.backgroundColor = "#001219";
+        i.style.color = "#94d2bd";
+        let actualOptionChoosen = event.target.innerText;
+        questions.map((i) => {
+            if (i.Answer == actualOptionChoosen) {
+                score++;
+                console.log(score);
+            }
+        });
+    });
+});
+
 continueButton.addEventListener("click", () => {
+    allOptions.forEach((i) => {
+        i.style.backgroundColor = "#94d2bd";
+        i.style.color = "#001219";
+    });
     loadQuestion(questions[questionIndex]);
     questionIndex++;
 
-    if (questionIndex === questions.length) {
+    if (questionIndex > questions.length - 1) {
         submitButton.hidden = false;
         continueButton.hidden = true;
     }
-})
+});
+
+submitButton.addEventListener("click", () => {
+    console.log(score);
+    firstOption.hidden = true;
+    secondOption.hidden = true;
+    thirdOption.hidden = true;
+    fourthOption.hidden = true;
+    submitButton.hidden = true;
+    continueButton.hidden = true;
+    title.innerHTML = "Your score is " + score;
+    title.classList.add("center");
+});
